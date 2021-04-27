@@ -29,12 +29,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_checkbox"
         android:layout_width="0dp"
-        android:layout_marginStart="16dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         app:layout_constraintBottom_toTopOf="@id/edit_checkbox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:listitem="@layout/list_item_checkbox" />
@@ -48,10 +46,10 @@
         android:imeOptions="actionDone"
         android:inputType="text|textAutoComplete"
         android:textColor="@color/black"
-        android:textSize="24dp"
-        android:layout_marginStart="12dp"
-        app:layout_constraintEnd_toEndOf="@id/recycler_checkbox"
-        app:layout_constraintStart_toStartOf="@id/recycler_checkbox"
+        android:textSize="18dp"
+        android:layout_marginStart="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recycler_checkbox"
         tools:text="sei lá" />
 

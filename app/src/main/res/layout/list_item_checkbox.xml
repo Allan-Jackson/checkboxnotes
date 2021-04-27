@@ -8,6 +8,7 @@
     tools:showIn="@layout/activity_note">
 
     <CheckBox
+        android:layout_marginStart="16dp"
         android:id="@+id/dynamic_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
