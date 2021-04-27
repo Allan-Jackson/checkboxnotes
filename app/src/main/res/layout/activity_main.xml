@@ -9,6 +9,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="64dp"
         android:layout_height="64dp"
+        app:fabCustomSize="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="20dp"
@@ -23,6 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/list_item_note"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
