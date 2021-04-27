@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Checkboxnotes</string>
+    <string name="button_save">Salvar</string>
+    <string name="title">Title</string>
 </resources>
