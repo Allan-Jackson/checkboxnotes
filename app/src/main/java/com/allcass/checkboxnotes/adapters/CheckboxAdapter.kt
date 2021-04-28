@@ -1,3 +1,5 @@
+package com.allcass.checkboxnotes.adapters
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,7 @@ class CheckboxAdapter(val checkboxList: MutableList<Pair<Boolean,String>>)
     override fun getItemCount(): Int {
         return checkboxList.size
     }
+
     inner class CheckboxViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun loadView(checkbox: Pair<Boolean,String>){
             itemView.dynamic_check.isChecked = checkbox.first

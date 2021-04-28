@@ -1,6 +1,7 @@
 package com.allcass.checkboxnotes.service.model;
 
 import androidx.room.*
+
 @Entity(tableName = "CheckBox")
 data class CheckBoxModel (
     @PrimaryKey(autoGenerate = true)

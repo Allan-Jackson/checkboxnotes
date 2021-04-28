@@ -1,6 +1,6 @@
 package com.allcass.checkboxnotes.view
 
-import CheckboxAdapter
+import com.allcass.checkboxnotes.adapters.CheckboxAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
