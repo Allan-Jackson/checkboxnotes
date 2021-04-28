@@ -21,7 +21,7 @@ interface CheckBoxDAO {
 
 
     @Query("SELECT * FROM CheckBox WHERE noteId = :id")
-    fun load(id: Int): CheckBoxModel
+    fun loadAll(id: Int): List<CheckBoxModel>
 
 
 

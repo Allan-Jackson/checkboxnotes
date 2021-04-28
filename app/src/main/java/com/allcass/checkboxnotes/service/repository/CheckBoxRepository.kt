@@ -3,7 +3,6 @@ package com.allcass.checkboxnotes.service.repository
 import android.content.Context
 import com.allcass.checkboxnotes.service.model.CheckBoxModel
 import com.allcass.checkboxnotes.service.model.NoteModel
-import java.lang.Exception
 
 class CheckBoxRepository(context: Context) {
 
@@ -37,8 +36,8 @@ class CheckBoxRepository(context: Context) {
         return mNoteDataBase.load(id)
     }
 
-    fun getCheckBoxFromNote(id: Int): CheckBoxModel {
-        return mCheckBoxDataBase.load(id)
+    fun getCheckBoxesFromNote(id: Int): List<CheckBoxModel> {
+        return mCheckBoxDataBase.loadAll(id)
     }
 
     fun deleteAll(note: NoteModel, id: Int) {

@@ -1,6 +1,7 @@
 package com.allcass.checkboxnotes.viewmodel
 
 import android.app.Application
+import android.widget.CompoundButton
 import com.allcass.checkboxnotes.view.adapters.CheckboxAdapter
 import android.widget.TextView
 import androidx.lifecycle.AndroidViewModel
@@ -10,7 +11,7 @@ import com.allcass.checkboxnotes.service.model.CheckBoxModel
 import com.allcass.checkboxnotes.service.model.NoteModel
 import com.allcass.checkboxnotes.service.repository.CheckBoxRepository
 
-class NoteViewModel(application: Application) : AndroidViewModel(application){
+class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     //todo: atualizar a lista de Checkbox do adapter para alterar o status de checked depois do usuário ter editado a nota
 
@@ -37,7 +38,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application){
         mCheckBoxRepository.saveCheckBox(checkboxModelList)
     }
 
-    fun createCheckbox(editText: TextView, adapter: CheckboxAdapter){
+    fun createCheckbox(editText: TextView, adapter: CheckboxAdapter) {
         val text = editText.text.toString()
         val checked = false
         val position = adapter.checkboxList.size
@@ -52,5 +53,12 @@ class NoteViewModel(application: Application) : AndroidViewModel(application){
         adapter.notifyItemInserted(position)
         editText.text = ""
 
+    }
+
+    //todo:
+    fun onCheckChanged(
+        checkboxModel: CheckBoxModel, checkboxView: CompoundButton, newStatus: Boolean
+    ) {
+        checkboxModel.status = newStatus
     }
 }
