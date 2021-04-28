@@ -15,6 +15,10 @@ class CheckBoxRepository(context: Context) {
         return mNoteDataBase.save(note)
     }
 
+    /*fun updateNote(note: NoteModel): Boolean {
+        return mNoteDataBase.update(note)  > 0
+    }*/
+
     fun saveCheckBox(checkboxList: List<CheckBoxModel>): Boolean {
         var inserted: Boolean = true
         checkboxList.forEach {
@@ -27,5 +31,18 @@ class CheckBoxRepository(context: Context) {
 
     fun getAll(): List<NoteModel> {
         return mNoteDataBase.getAllNotes()
+    }
+
+    fun getNote(id: Int): NoteModel {
+        return mNoteDataBase.load(id)
+    }
+
+    fun getCheckBoxFromNote(id: Int): CheckBoxModel {
+        return mCheckBoxDataBase.load(id)
+    }
+
+    fun deleteAll(note: NoteModel, id: Int) {
+        mNoteDataBase.delete(note)
+        mCheckBoxDataBase.deleteAll(id)
     }
 }

@@ -1,16 +1,16 @@
-package com.allcass.checkboxnotes.adapters
+package com.allcass.checkboxnotes.view.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.allcass.checkboxnotes.R
+import com.allcass.checkboxnotes.service.model.CheckBoxModel
 import kotlinx.android.synthetic.main.list_item_checkbox.view.*
 
 //todo: atualizar o adapter para receber CheckBoxModel
 
-class CheckboxAdapter(val checkboxList: MutableList<Pair<Boolean,String>>)
-    : RecyclerView.Adapter<CheckboxAdapter.CheckboxViewHolder>() {
+class CheckboxAdapter(val checkboxList: MutableList<CheckBoxModel> = arrayListOf()) : RecyclerView.Adapter<CheckboxAdapter.CheckboxViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckboxViewHolder {
@@ -19,7 +19,7 @@ class CheckboxAdapter(val checkboxList: MutableList<Pair<Boolean,String>>)
     }
 
     override fun onBindViewHolder(holder: CheckboxViewHolder, position: Int) {
-        holder.loadView(position, checkboxList[position])
+        holder.loadView(checkboxList[position])
     }
 
     override fun getItemCount(): Int {
@@ -27,10 +27,10 @@ class CheckboxAdapter(val checkboxList: MutableList<Pair<Boolean,String>>)
     }
 
     inner class CheckboxViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        fun loadView(position: Int, checkbox: Pair<Boolean,String>){
-            itemView.dynamic_check.id = position
-            itemView.dynamic_check.isChecked = checkbox.first
-            itemView.dynamic_check.text = checkbox.second
+        fun loadView(checkbox: CheckBoxModel){
+            //itemView.dynamic_check.id = checkbox.id
+            itemView.dynamic_check.isChecked = checkbox.status
+            itemView.dynamic_check.text = checkbox.text
         }
     }
 }

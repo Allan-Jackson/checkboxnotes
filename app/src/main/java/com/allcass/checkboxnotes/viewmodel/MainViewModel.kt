@@ -12,13 +12,17 @@ import com.allcass.checkboxnotes.service.repository.CheckBoxRepository
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val mGuestRepository = CheckBoxRepository(application.applicationContext)
+    private val mCheckBoxRepository = CheckBoxRepository(application.applicationContext)
 
     private val mNoteList = MutableLiveData<List<NoteModel>>()
     val noteList: LiveData<List<NoteModel>> = mNoteList
 
     fun load(){
-        mNoteList.value = mGuestRepository.getAll()
+        mNoteList.value = mCheckBoxRepository.getAll()
+    }
+    fun delete(id: Int) {
+        val note = mCheckBoxRepository.getNote(id)
+        mCheckBoxRepository.deleteAll(note,id)
     }
 
 }

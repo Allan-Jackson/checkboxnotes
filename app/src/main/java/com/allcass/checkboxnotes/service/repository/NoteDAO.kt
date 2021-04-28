@@ -1,9 +1,7 @@
 
 package com.allcass.checkboxnotes.service.repository
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.allcass.checkboxnotes.service.model.NoteModel
 
 @Dao
@@ -13,10 +11,13 @@ interface NoteDAO {
     fun save(note: NoteModel): Long
 
     /*@Update
-    fun update(note: NoteModel): Int
+    fun update(note: NoteModel): Int*/
 
     @Delete
-    fun delete(note: NoteModel)*/
+    fun delete(note: NoteModel)
+
+    @Query("SELECT * FROM Note WHERE id = :id")
+    fun load(id: Int): NoteModel
 
     @Query("SELECT * FROM Note")
     fun getAllNotes(): List<NoteModel>

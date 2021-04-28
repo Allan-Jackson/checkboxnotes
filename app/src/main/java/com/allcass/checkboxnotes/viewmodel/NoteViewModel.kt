@@ -1,13 +1,11 @@
 package com.allcass.checkboxnotes.viewmodel
 
 import android.app.Application
-import android.provider.ContactsContract
-import com.allcass.checkboxnotes.adapters.CheckboxAdapter
+import com.allcass.checkboxnotes.view.adapters.CheckboxAdapter
 import android.widget.TextView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.allcass.checkboxnotes.service.model.CheckBoxModel
 import com.allcass.checkboxnotes.service.model.NoteModel
 import com.allcass.checkboxnotes.service.repository.CheckBoxRepository
@@ -15,7 +13,7 @@ import com.allcass.checkboxnotes.service.repository.CheckBoxRepository
 class NoteViewModel(application: Application) : AndroidViewModel(application){
 
     //todo: atualizar a lista de Checkbox do adapter para alterar o status de checked depois do usuário ter editado a nota
-    var id = 0
+
     private val mContext = application.applicationContext
     private val mCheckBoxRepository: CheckBoxRepository = CheckBoxRepository(mContext)
 
@@ -31,8 +29,8 @@ class NoteViewModel(application: Application) : AndroidViewModel(application){
             checkboxModelList.add(
                 CheckBoxModel().apply {
                     this.noteId = noteId
-                    text = it.second
-                    status = it.first
+                    text = it.text
+                    status = it.status
                 }
             )
         }
@@ -43,7 +41,14 @@ class NoteViewModel(application: Application) : AndroidViewModel(application){
         val text = editText.text.toString()
         val checked = false
         val position = adapter.checkboxList.size
-        adapter.checkboxList.add(position,Pair(checked,text))
+
+        adapter.checkboxList.add(
+            CheckBoxModel().apply {
+                this.text = text
+                this.status = checked
+                this.id = position
+            })
+
         adapter.notifyItemInserted(position)
         editText.text = ""
 

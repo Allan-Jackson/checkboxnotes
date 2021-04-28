@@ -8,17 +8,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.allcass.checkboxnotes.R
-import com.allcass.checkboxnotes.adapters.CheckboxAdapter
-import com.allcass.checkboxnotes.adapters.NoteAdapter
-import com.allcass.checkboxnotes.service.model.NoteModel
+import com.allcass.checkboxnotes.view.adapters.NoteAdapter
+import com.allcass.checkboxnotes.view.listener.NoteListener
 import com.allcass.checkboxnotes.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_note.*
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var mAdapter: NoteAdapter
     private lateinit var mViewModel: MainViewModel
+    private val mAdapter: NoteAdapter = NoteAdapter()
+    private lateinit var mListener: NoteListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +33,38 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setListeners()
 
         observe()
+
+        mListener = object : NoteListener {
+            override fun onClick(id: Int) {
+                val intent = Intent(this@MainActivity, NoteActivity::class.java)
+                val bundle = Bundle()
+                bundle.putInt("NoteId", id)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+
+            override fun onDelete(id: Int) {
+                mViewModel.delete(id)
+                mViewModel.load()
+            }
+        }
+
+        mAdapter.attachListener(mListener)
+
+
+
+
     }
 
-    fun setupRecycler(){
-        mAdapter = NoteAdapter()
+    private fun setupRecycler(){
         recycler_main.adapter = mAdapter
         recycler_main.layoutManager = LinearLayoutManager(this)
             .apply { orientation = LinearLayoutManager.VERTICAL }
     }
-    fun setListeners(){
+
+
+
+    private fun setListeners(){
         button_floating.setOnClickListener(this)
     }
 
