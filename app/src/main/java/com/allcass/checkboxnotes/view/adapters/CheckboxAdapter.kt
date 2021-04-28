@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.list_item_checkbox.view.*
 
 //todo: atualizar o adapter para receber CheckBoxModel
 
-class CheckboxAdapter(val checkboxList: MutableList<CheckBoxModel> = mutableListOf()) :
+class CheckboxAdapter(private var mCheckboxList: MutableList<CheckBoxModel> = mutableListOf()) :
     RecyclerView.Adapter<CheckboxAdapter.CheckboxViewHolder>() {
 
     private lateinit var mListener: CheckBoxListener
@@ -25,20 +25,37 @@ class CheckboxAdapter(val checkboxList: MutableList<CheckBoxModel> = mutableList
     }
 
     override fun onBindViewHolder(holder: CheckboxViewHolder, position: Int) {
-        holder.loadView(checkboxList[position])
+        holder.loadView(mCheckboxList[position])
     }
 
     override fun getItemCount(): Int {
-        return checkboxList.size
+        return mCheckboxList.size
     }
 
+    //inicializa o mListener - que cuida do evento do checkbox - na Activity
     fun attachListener(listener: CheckBoxListener) {
         mListener = listener
     }
 
+    //atualiza os dados do adapter, necessário para centralizar a manipulação dos dados na camada de ViewModel
+    //ou seja, a CheckBoxViewModel é quem vai atualizar os dados com uma lista LiveData - que vai chamar este método quando for alterada
+    fun updateCheckBoxList(checkBoxList: List<CheckBoxModel>){
+        mCheckboxList = checkBoxList as MutableList
+        notifyDataSetChanged()
+    }
+
+    //função para inserir/criar um novo checkbox na lista, por padrão já inclui no final
+    fun insertCheckbox(checkbox: CheckBoxModel, position: Int = itemCount){
+        mCheckboxList.add(position,checkbox)
+        notifyItemInserted(position)
+    }
+
+    //retorna a lista de checkBoxes como non-mutable list
+    fun getCheckboxList(): List<CheckBoxModel> = mCheckboxList
+
+
     inner class CheckboxViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun loadView(checkbox: CheckBoxModel) {
-            //itemView.dynamic_check.id = checkbox.id
             itemView.dynamic_check.isChecked = checkbox.status
             itemView.dynamic_check.text = checkbox.text
             itemView.dynamic_check.setOnCheckedChangeListener(
