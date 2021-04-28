@@ -18,44 +18,41 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     private val mContext = application.applicationContext
     private val mCheckBoxRepository: CheckBoxRepository = CheckBoxRepository(mContext)
 
-    fun save(adapter: CheckboxAdapter, title: String) {
+    private val mCheckBoxList = MutableLiveData<List<CheckBoxModel>>()
+    val checkBoxList: LiveData<List<CheckBoxModel>> = mCheckBoxList
+
+    fun save(adapter: CheckboxAdapter, titleNote: String) {
+
+        //seta o título da nossa nota na NoteModel
         val noteModel = NoteModel().apply {
-            this.title = title
+            this.title = titleNote
         }
-
+        //recupera o id da nota
         var noteId = mCheckBoxRepository.saveNote(noteModel)
-
-        val checkboxModelList = mutableListOf<CheckBoxModel>()
-        adapter.checkboxList.forEach {
-            checkboxModelList.add(
-                CheckBoxModel().apply {
-                    this.noteId = noteId
-                    text = it.text
-                    status = it.status
-                }
-            )
+        var checklist = adapter.getCheckboxList()
+        checklist.forEach {
+            it.noteId = noteId
         }
-        mCheckBoxRepository.saveCheckBox(checkboxModelList)
+
+        //passa os dados do nosso adapter/RecyclerView - a checklist criada - para serem salvos no banco
+        mCheckBoxRepository.saveCheckBox(adapter.getCheckboxList())
     }
 
+    //cria um novo CheckBox no RecyclerView
     fun createCheckbox(editText: TextView, adapter: CheckboxAdapter) {
         val text = editText.text.toString()
         val checked = false
-        val position = adapter.checkboxList.size
 
-        adapter.checkboxList.add(
+        //cria um CheckBox com as configurações e insere na lista de dados do adapter
+        adapter.insertCheckbox(
             CheckBoxModel().apply {
                 this.text = text
                 this.status = checked
-                this.id = position
+                this.id = adapter.itemCount
             })
-
-        adapter.notifyItemInserted(position)
-        editText.text = ""
-
     }
 
-    //todo:
+    //muda o status do CheckBox quando ele é clicado
     fun onCheckChanged(
         checkboxModel: CheckBoxModel, checkboxView: CompoundButton, newStatus: Boolean
     ) {
