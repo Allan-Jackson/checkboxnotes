@@ -9,7 +9,7 @@
 
     <!-- titulo -->
     <EditText
-        android:id="@+id/title"
+        android:id="@+id/titleNote"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@id/edit_checkbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/titleNote"
         tools:listitem="@layout/list_item_checkbox" />
 
     <EditText

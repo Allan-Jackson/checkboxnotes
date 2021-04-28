@@ -4,14 +4,17 @@ import com.allcass.checkboxnotes.adapters.CheckboxAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.allcass.checkboxnotes.R
 import com.allcass.checkboxnotes.viewmodel.NoteViewModel
 import kotlinx.android.synthetic.main.activity_note.*
 
-class NoteActivity : AppCompatActivity(), TextView.OnEditorActionListener {
+class NoteActivity : AppCompatActivity(), TextView.OnEditorActionListener, View.OnClickListener {
     private lateinit var mViewModel: NoteViewModel
     private lateinit var mAdapter: CheckboxAdapter
 
@@ -30,6 +33,7 @@ class NoteActivity : AppCompatActivity(), TextView.OnEditorActionListener {
     }
     fun setListeners(){
         edit_checkbox.setOnEditorActionListener(this)
+        buttonSave.setOnClickListener(this)
     }
     override fun onEditorAction(editView: TextView, actionId: Int, event: KeyEvent?): Boolean {
         if(editView.id == R.id.edit_checkbox){
@@ -38,5 +42,13 @@ class NoteActivity : AppCompatActivity(), TextView.OnEditorActionListener {
         }
         return false
     }
+
+    override fun onClick(view: View) {
+        val text = titleNote.text.toString()
+        mViewModel.save(mAdapter, text)
+    }
+
+
+
 
 }

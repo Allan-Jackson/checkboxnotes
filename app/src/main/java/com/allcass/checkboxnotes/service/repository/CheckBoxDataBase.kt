@@ -7,9 +7,10 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.allcass.checkboxnotes.service.model.CheckBoxModel
+import com.allcass.checkboxnotes.service.model.NoteModel
 
 
-@Database(entities = [CheckBoxModel::class], version = 1)
+@Database(entities = [CheckBoxModel::class, NoteModel::class], version = 1)
 abstract class CheckBoxDataBase : RoomDatabase() {
 
     abstract fun checkBoxDAO(): CheckBoxDAO

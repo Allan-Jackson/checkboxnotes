@@ -1,6 +1,7 @@
 package com.allcass.checkboxnotes.viewmodel
 
 import android.app.Application
+import android.provider.ContactsContract
 import com.allcass.checkboxnotes.adapters.CheckboxAdapter
 import android.widget.TextView
 import androidx.lifecycle.AndroidViewModel
@@ -13,39 +14,28 @@ import com.allcass.checkboxnotes.service.repository.CheckBoxRepository
 
 class NoteViewModel(application: Application) : AndroidViewModel(application){
 
+    //todo: atualizar a lista de Checkbox do adapter para alterar o status de checked depois do usuário ter editado a nota
+
     private val mContext = application.applicationContext
     private val mCheckBoxRepository: CheckBoxRepository = CheckBoxRepository(mContext)
 
-    private var mNote = MutableLiveData<NoteModel>()
-    val note: LiveData<NoteModel> = mNote
-
-
-    fun save(idNote: Int, title: String,idCheckBox: Int, lista ) {
-        val note = NoteModel().apply {
-            this.id = idNote
+    fun save(adapter: CheckboxAdapter, title: String) {
+        val noteModel = NoteModel().apply {
             this.title = title
         }
-        if (idNote == 0) {
-            mCheckBoxRepository.saveNote(note)
-        }/*else {
 
-        }*/
+        var noteId = mCheckBoxRepository.saveNote(noteModel)
 
-        //for pra cada posição da lista
-        val checkBox = CheckBoxModel().apply{
-            this.id = idCheckBox
-            this.noteId = idNote
-            this.text = lista.first
-            this.status = lista.second
+        val checkboxModelList = mutableListOf<CheckBoxModel>()
+        adapter.checkboxList.forEach {
+            checkboxModelList.add(
+                CheckBoxModel().apply {
+                    this.noteId = noteId
+                    text = it.second
+                    status = it.first
+                }
+            )
         }
-        if (idCheckBox == 0) {
-            mCheckBoxRepository.saveCheckBox(checkBox)
-        }/*else {
-
-        }*/
-
-
-
     }
 
     fun createCheckbox(editText: TextView, adapter: CheckboxAdapter){

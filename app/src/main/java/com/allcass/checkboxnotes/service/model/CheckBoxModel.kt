@@ -6,7 +6,7 @@ import androidx.room.*
 data class CheckBoxModel (
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
-    var noteId: Int = 0,
+    var noteId: Long = 0,
     var text: String = "",
     var status: Boolean = false
 )
