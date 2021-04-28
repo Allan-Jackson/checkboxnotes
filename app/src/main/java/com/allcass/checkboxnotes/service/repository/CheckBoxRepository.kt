@@ -1,3 +1,4 @@
+/*
 package com.allcass.checkboxnotes.service.repository
 
 import android.content.Context
@@ -9,7 +10,8 @@ class CheckBoxRepository (context: Context){
     private val mCheckBoxDataBase = CheckBoxDataBase.getDatabase(context).checkBoxDAO()
     private val mNoteDataBase = CheckBoxDataBase.getDatabase(context).noteDAO()
 
-    /**
+    */
+/**
     fun save(guest: GuestModel): Boolean {
 
     }
@@ -21,6 +23,7 @@ class CheckBoxRepository (context: Context){
     fun delete(guest: GuestModel) {
 
     }
-    **/
+    **//*
 
-}
+
+}*/

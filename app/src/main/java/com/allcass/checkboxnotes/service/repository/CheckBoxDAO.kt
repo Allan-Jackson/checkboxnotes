@@ -1,3 +1,4 @@
+/*
 package com.allcass.checkboxnotes.service.repository
 
 import androidx.room.*
@@ -16,4 +17,4 @@ interface CheckBoxDAO {
     @Delete
     fun delete(checkBox: CheckBoxModel)
 
-}
+}*/

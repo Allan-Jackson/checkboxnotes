@@ -1,3 +1,4 @@
+/*
 package com.allcass.checkboxnotes.service.repository
 
 import androidx.room.Dao
@@ -20,3 +21,4 @@ interface NoteDAO {
     fun delete(note: NoteModel)
 
 }
+*/

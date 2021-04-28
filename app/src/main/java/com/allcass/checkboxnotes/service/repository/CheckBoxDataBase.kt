@@ -1,3 +1,4 @@
+/*
 package com.allcass.checkboxnotes.service.repository
 
 import android.content.Context
@@ -30,9 +31,11 @@ abstract class CheckBoxDataBase : RoomDatabase() {
             return INSTANCE
         }
 
-        /**
+        */
+/**
          * Atualização de versão de banco de dados
-         */
+         *//*
+
         private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("DELETE FROM Guest")
@@ -40,4 +43,4 @@ abstract class CheckBoxDataBase : RoomDatabase() {
         }
 
     }
-}
+}*/
