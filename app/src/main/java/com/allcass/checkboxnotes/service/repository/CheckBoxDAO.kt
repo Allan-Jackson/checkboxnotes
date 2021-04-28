@@ -16,4 +16,5 @@ interface CheckBoxDAO {
     fun delete(checkBox: CheckBoxModel)
     **/
 
+
 }

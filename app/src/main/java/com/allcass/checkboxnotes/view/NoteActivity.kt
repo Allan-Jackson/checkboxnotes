@@ -1,5 +1,6 @@
 package com.allcass.checkboxnotes.view
 
+import android.content.Intent
 import com.allcass.checkboxnotes.adapters.CheckboxAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -46,6 +47,7 @@ class NoteActivity : AppCompatActivity(), TextView.OnEditorActionListener, View.
     override fun onClick(view: View) {
         val text = titleNote.text.toString()
         mViewModel.save(mAdapter, text)
+        startActivity(Intent(this,MainActivity::class.java))
     }
 
 

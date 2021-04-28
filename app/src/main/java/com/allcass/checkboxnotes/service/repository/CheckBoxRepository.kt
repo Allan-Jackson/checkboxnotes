@@ -15,7 +15,7 @@ class CheckBoxRepository(context: Context) {
         return mNoteDataBase.save(note)
     }
 
-    fun save(checkboxList: List<CheckBoxModel>): Boolean {
+    fun saveCheckBox(checkboxList: List<CheckBoxModel>): Boolean {
         var inserted: Boolean = true
         checkboxList.forEach {
             if(mCheckBoxDataBase.save(it) <= 0){
@@ -25,4 +25,7 @@ class CheckBoxRepository(context: Context) {
         return inserted
     }
 
+    fun getAll(): List<NoteModel> {
+        return mNoteDataBase.getAllNotes()
+    }
 }

@@ -1,9 +1,24 @@
 package com.allcass.checkboxnotes.viewmodel
 
+import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.allcass.checkboxnotes.service.model.NoteModel
+import com.allcass.checkboxnotes.service.repository.CheckBoxRepository
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val mGuestRepository = CheckBoxRepository(application.applicationContext)
+
+    private val mNoteList = MutableLiveData<List<NoteModel>>()
+    val noteList: LiveData<List<NoteModel>> = mNoteList
+
+    fun load(){
+        mNoteList.value = mGuestRepository.getAll()
+    }
 
 }

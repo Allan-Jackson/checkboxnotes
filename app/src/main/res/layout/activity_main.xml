@@ -7,6 +7,7 @@
     tools:context=".view.MainActivity">
     <!--  Floating Action Button (FAB)  -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_floating"
         android:layout_width="64dp"
         android:layout_height="64dp"
         app:fabCustomSize="64dp"
@@ -18,6 +19,7 @@
         android:tint="@android:color/holo_blue_dark"
         />
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_main"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -15,7 +15,7 @@ import com.allcass.checkboxnotes.service.repository.CheckBoxRepository
 class NoteViewModel(application: Application) : AndroidViewModel(application){
 
     //todo: atualizar a lista de Checkbox do adapter para alterar o status de checked depois do usuário ter editado a nota
-
+    var id = 0
     private val mContext = application.applicationContext
     private val mCheckBoxRepository: CheckBoxRepository = CheckBoxRepository(mContext)
 
@@ -36,6 +36,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application){
                 }
             )
         }
+        mCheckBoxRepository.saveCheckBox(checkboxModelList)
     }
 
     fun createCheckbox(editText: TextView, adapter: CheckboxAdapter){
