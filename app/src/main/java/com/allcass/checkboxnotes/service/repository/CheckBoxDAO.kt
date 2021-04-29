@@ -14,7 +14,7 @@ interface CheckBoxDAO {
     fun update(checkBox: List<CheckBoxModel>?): Int
 
     @Delete
-    fun delete(checkBox: CheckBoxModel)
+    fun delete(checkBox: List<CheckBoxModel>)
 
     @Query("DELETE FROM CheckBox WHERE noteId = :id")
     fun deleteAll(id: Long)

@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.list_item_checkbox.view.*
 class CheckboxAdapter(private var mCheckboxList: MutableList<CheckBoxModel> = mutableListOf()) :
     RecyclerView.Adapter<CheckboxAdapter.CheckboxViewHolder>() {
 
-    private lateinit var mListener: CheckBoxListener
+    private lateinit var mListenerCheckBox: CheckBoxListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckboxViewHolder {
         val view =
@@ -34,7 +34,7 @@ class CheckboxAdapter(private var mCheckboxList: MutableList<CheckBoxModel> = mu
 
     //inicializa o mListener - que cuida do evento do checkbox - na Activity
     fun attachListener(listener: CheckBoxListener) {
-        mListener = listener
+        mListenerCheckBox = listener
     }
 
     //atualiza os dados do adapter, necessário para centralizar a manipulação dos dados na camada de ViewModel
@@ -42,6 +42,11 @@ class CheckboxAdapter(private var mCheckboxList: MutableList<CheckBoxModel> = mu
     fun updateCheckBoxList(checkBoxList: List<CheckBoxModel>){
         mCheckboxList = checkBoxList as MutableList
         notifyDataSetChanged()
+    }
+    fun deleteCheckBox(checkBox: CheckBoxModel){
+        var index = mCheckboxList.indexOf(checkBox)
+        mCheckboxList.remove(checkBox)
+        notifyItemRemoved(index)
     }
 
     //função para inserir/criar um novo checkbox na lista, por padrão já inclui no final
@@ -61,10 +66,13 @@ class CheckboxAdapter(private var mCheckboxList: MutableList<CheckBoxModel> = mu
             itemView.dynamic_check.setOnCheckedChangeListener(
                 object : OnCheckedChangeListener {
                     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-                        mListener.onCheckChanged(checkbox, buttonView, isChecked)
+                        mListenerCheckBox.onCheckChanged(checkbox, isChecked)
                     }
                 }
             )
+            itemView.imageButton.setOnClickListener{
+                mListenerCheckBox.onClickImageButton(checkbox)
+            }
         }
     }
 }
