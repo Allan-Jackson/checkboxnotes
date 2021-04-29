@@ -17,7 +17,7 @@ interface NoteDAO {
     fun delete(note: NoteModel)
 
     @Query("SELECT * FROM Note WHERE id = :id")
-    fun load(id: Int): NoteModel
+    fun load(id: Long): NoteModel
 
     @Query("SELECT * FROM Note")
     fun getAllNotes(): List<NoteModel>

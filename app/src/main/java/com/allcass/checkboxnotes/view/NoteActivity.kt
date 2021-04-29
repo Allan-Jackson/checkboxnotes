@@ -21,7 +21,7 @@ class NoteActivity : AppCompatActivity(), TextView.OnEditorActionListener, View.
 
     private lateinit var mViewModel: NoteViewModel
     private val mAdapter: CheckboxAdapter = CheckboxAdapter()
-    private var mNoteId: Int = 0
+    private var mNoteId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +29,8 @@ class NoteActivity : AppCompatActivity(), TextView.OnEditorActionListener, View.
 
         mViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
-        setupRecycler()
-
         loadData()
-
+        setupRecycler()
         setListeners()
         setObservers()
 
@@ -43,7 +41,8 @@ class NoteActivity : AppCompatActivity(), TextView.OnEditorActionListener, View.
     private fun loadData() {
         val bundle = intent.extras
         if (bundle != null) {
-            mNoteId = bundle.getInt("NoteId")
+            mNoteId = bundle.getLong("NoteId")
+            mViewModel.loadData(mNoteId)
         }
     }
 
@@ -63,6 +62,9 @@ class NoteActivity : AppCompatActivity(), TextView.OnEditorActionListener, View.
     private fun setObservers(){
         mViewModel.checkBoxList.observe(this,{
             mAdapter.updateCheckBoxList(it) //atualiza a lista de checkboxes do adapter/recyclerView
+        })
+        mViewModel.title.observe(this,{
+            titleNote.setText(it.title)
         })
     }
 

@@ -1,6 +1,6 @@
 package com.allcass.checkboxnotes.view.listener
 
 interface NoteListener {
-    fun onClick(id: Int)
-    fun onDelete(id: Int)
+    fun onClick(id: Long)
+    fun onDelete(id: Long)
 }

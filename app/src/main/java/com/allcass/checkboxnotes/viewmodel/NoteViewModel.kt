@@ -21,6 +21,9 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     private val mCheckBoxList = MutableLiveData<List<CheckBoxModel>>()
     val checkBoxList: LiveData<List<CheckBoxModel>> = mCheckBoxList
 
+    private val mNote = MutableLiveData<NoteModel>()
+    val title: LiveData<NoteModel> = mNote
+
     fun save(adapter: CheckboxAdapter, titleNote: String) {
 
         //seta o título da nossa nota na NoteModel
@@ -49,6 +52,10 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
                 this.text = text
                 this.status = checked
             })
+    }
+    fun loadData(noteId: Long){
+        mCheckBoxList.value = mCheckBoxRepository.getCheckBoxesFromNote(noteId)
+        mNote.value = mCheckBoxRepository.getNote(noteId)
     }
 
     //muda o status do CheckBox quando ele é clicado

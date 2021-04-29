@@ -20,7 +20,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun load(){
         mNoteList.value = mCheckBoxRepository.getAll()
     }
-    fun delete(id: Int) {
+    fun delete(id: Long) {
         val note = mCheckBoxRepository.getNote(id)
         mCheckBoxRepository.deleteAll(note,id)
     }

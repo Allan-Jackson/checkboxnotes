@@ -28,15 +28,15 @@ class CheckBoxRepository(context: Context) {
         return mNoteDataBase.getAllNotes()
     }
 
-    fun getNote(id: Int): NoteModel {
+    fun getNote(id: Long): NoteModel {
         return mNoteDataBase.load(id)
     }
 
-    fun getCheckBoxesFromNote(id: Int): List<CheckBoxModel> {
+    fun getCheckBoxesFromNote(id: Long): List<CheckBoxModel> {
         return mCheckBoxDataBase.loadAll(id)
     }
 
-    fun deleteAll(note: NoteModel, id: Int) {
+    fun deleteAll(note: NoteModel, id: Long) {
         mNoteDataBase.delete(note)
         mCheckBoxDataBase.deleteAll(id)
     }

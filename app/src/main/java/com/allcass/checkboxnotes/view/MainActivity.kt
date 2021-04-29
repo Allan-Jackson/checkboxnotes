@@ -32,28 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         setListeners()
 
-        observe()
-
-        mListener = object : NoteListener {
-            override fun onClick(id: Int) {
-                val intent = Intent(this@MainActivity, NoteActivity::class.java)
-                val bundle = Bundle()
-                bundle.putInt("NoteId", id)
-                intent.putExtras(bundle)
-                startActivity(intent)
-            }
-
-            override fun onDelete(id: Int) {
-                mViewModel.delete(id)
-                mViewModel.load()
-            }
-        }
-
-        mAdapter.attachListener(mListener)
-
-
-
-
+        setObservers()
     }
 
     private fun setupRecycler(){
@@ -65,10 +44,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun setListeners(){
+        mListener = object : NoteListener {
+            override fun onClick(id: Long) {
+                val intent = Intent(this@MainActivity, NoteActivity::class.java)
+                val bundle = Bundle()
+                bundle.putLong("NoteId", id)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+
+            override fun onDelete(id: Long) {
+                mViewModel.delete(id)
+                mViewModel.load()
+            }
+        }
+
+        mAdapter.attachListener(mListener)
         button_floating.setOnClickListener(this)
     }
 
-    private fun observe() {
+    private fun setObservers() {
         mViewModel.noteList.observe(this, Observer {
             mAdapter.updateNotes(it)
         })
