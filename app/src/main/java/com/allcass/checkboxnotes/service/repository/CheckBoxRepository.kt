@@ -41,4 +41,7 @@ class CheckBoxRepository(context: Context) {
         mNoteDataBase.delete(note)
         mCheckBoxDataBase.deleteAll(id)
     }
+    fun deleteCheckBox(list: List<CheckBoxModel>){
+        mCheckBoxDataBase.delete(list)
+    }
 }

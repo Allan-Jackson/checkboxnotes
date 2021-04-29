@@ -19,6 +19,7 @@ interface CheckBoxDAO {
     @Query("DELETE FROM CheckBox WHERE noteId = :id")
     fun deleteAll(id: Long)
 
+
     @Query("SELECT * FROM CheckBox WHERE noteId = :id")
     fun loadAll(id: Long): List<CheckBoxModel>
 

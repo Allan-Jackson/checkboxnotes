@@ -1,17 +1,19 @@
 package com.allcass.checkboxnotes.view
 
 import android.content.Intent
-import com.allcass.checkboxnotes.view.adapters.CheckboxAdapter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.widget.CompoundButton
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.allcass.checkboxnotes.R
 import com.allcass.checkboxnotes.service.model.CheckBoxModel
+import com.allcass.checkboxnotes.view.adapters.CheckboxAdapter
 import com.allcass.checkboxnotes.view.listener.CheckBoxListener
 import com.allcass.checkboxnotes.viewmodel.CheckBoxViewModel
 import kotlinx.android.synthetic.main.activity_note.*
@@ -29,6 +31,7 @@ class CheckBoxActivity : AppCompatActivity(), TextView.OnEditorActionListener, V
 
         mViewModel = ViewModelProvider(this).get(CheckBoxViewModel::class.java)
 
+        cursor()
         loadData()
         setupRecycler()
         setListeners()
@@ -41,6 +44,14 @@ class CheckBoxActivity : AppCompatActivity(), TextView.OnEditorActionListener, V
         if (bundle != null) {
             mNoteId = bundle.getLong("NoteId")
             mViewModel.loadData(mNoteId)
+        }
+
+    }
+
+    private fun cursor(){
+        val bundle = intent.extras
+        if (bundle == null){
+            titleNote.requestFocus()
         }
     }
 
@@ -59,18 +70,26 @@ class CheckBoxActivity : AppCompatActivity(), TextView.OnEditorActionListener, V
 
     //observa a lista de checkboxes e a atualiza quando ela for alterada na ViewModel
     private fun setObservers(){
-        mViewModel.checkBoxList.observe(this,{
+        mViewModel.checkBoxList.observe(this, {
             mAdapter.updateCheckBoxList(it) //atualiza a lista de checkboxes do adapter/recyclerView
         })
-        mViewModel.title.observe(this,{
+        mViewModel.title.observe(this, {
             titleNote.setText(it.title)
         })
     }
 
     override fun onEditorAction(editView: TextView, actionId: Int, event: KeyEvent?): Boolean {
-        if (editView.id == R.id.edit_checkbox) {
-            mViewModel.createCheckbox(editView, mAdapter)
-            editView.text = ""
+        if (editView.id == R.id.edit_checkbox ) {
+            if(editView.text.isEmpty()) {
+                val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.hideSoftInputFromWindow(
+                    currentFocus!!.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS)
+
+            }else{
+                mViewModel.createCheckbox(editView, mAdapter)
+                editView.text = ""
+            }
             return true
         }
         return false
@@ -80,8 +99,13 @@ class CheckBoxActivity : AppCompatActivity(), TextView.OnEditorActionListener, V
         when(view.id){
             R.id.buttonSave -> {
                 val txtTitleNote = titleNote.text.toString()
-                mViewModel.save(mNoteId, mAdapter, txtTitleNote)
-                startActivity(Intent(this, NoteActivity::class.java))
+
+                if(!txtTitleNote.isEmpty()) {
+                    mViewModel.save(mNoteId, mAdapter, txtTitleNote)
+                    startActivity(Intent(this, NoteActivity::class.java))
+                }else{
+                    Toast.makeText(this, "Insira um título!",Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

@@ -53,6 +53,7 @@ class CheckBoxViewModel(application: Application) : AndroidViewModel(application
             //passa os dados do nosso adapter/RecyclerView - a checklist criada - para serem salvos no banco
             mCheckBoxRepository.saveCheckBox(checklist)
         } else{
+            mCheckBoxRepository.deleteCheckBox(mCheckBoxDeletedList)
             mCheckBoxRepository.saveCheckBox(listaNovosCheckBoxes)
             mCheckBoxRepository.update(noteModel, mCheckBoxList.value)
         }
