@@ -34,8 +34,6 @@ class NoteActivity : AppCompatActivity(), TextView.OnEditorActionListener, View.
         setListeners()
         setObservers()
 
-
-
     }
 
     private fun loadData() {
@@ -81,7 +79,7 @@ class NoteActivity : AppCompatActivity(), TextView.OnEditorActionListener, View.
         when(view.id){
             R.id.buttonSave -> {
                 val txtTitleNote = titleNote.text.toString()
-                mViewModel.save(mAdapter, txtTitleNote)
+                mViewModel.save(mNoteId, mAdapter, txtTitleNote)
                 startActivity(Intent(this, MainActivity::class.java))
             }
         }

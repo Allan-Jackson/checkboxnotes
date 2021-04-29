@@ -10,8 +10,8 @@ interface NoteDAO {
     @Insert
     fun save(note: NoteModel): Long
 
-    /*@Update
-    fun update(note: NoteModel): Int*/
+    @Update
+    fun update(note: NoteModel): Int
 
     @Delete
     fun delete(note: NoteModel)

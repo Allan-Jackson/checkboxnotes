@@ -10,8 +10,8 @@ interface CheckBoxDAO {
     @Insert
     fun save(checkBox: CheckBoxModel): Long
 
-//    @Update
-//    fun update(checkBox: CheckBoxModel): Int
+    @Update
+    fun update(checkBox: List<CheckBoxModel>?): Int
 
     @Delete
     fun delete(checkBox: CheckBoxModel)
@@ -19,12 +19,7 @@ interface CheckBoxDAO {
     @Query("DELETE FROM CheckBox WHERE noteId = :id")
     fun deleteAll(id: Long)
 
-
     @Query("SELECT * FROM CheckBox WHERE noteId = :id")
     fun loadAll(id: Long): List<CheckBoxModel>
-
-
-
-
 
 }

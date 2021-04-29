@@ -13,8 +13,6 @@ import com.allcass.checkboxnotes.service.repository.CheckBoxRepository
 
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
-    //todo: atualizar a lista de Checkbox do adapter para alterar o status de checked depois do usuário ter editado a nota
-
     private val mContext = application.applicationContext
     private val mCheckBoxRepository: CheckBoxRepository = CheckBoxRepository(mContext)
 
@@ -24,22 +22,40 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     private val mNote = MutableLiveData<NoteModel>()
     val title: LiveData<NoteModel> = mNote
 
-    fun save(adapter: CheckboxAdapter, titleNote: String) {
+
+
+    fun save(id:Long, adapter: CheckboxAdapter, titleNote: String) {
+
+        var noteId = id
 
         //seta o título da nossa nota na NoteModel
         val noteModel = NoteModel().apply {
             this.title = titleNote
         }
+        if (id == 0.toLong()){
+            noteId = mCheckBoxRepository.saveNote(noteModel)
+        }
+
         //recupera o id da nota
-        var noteId = mCheckBoxRepository.saveNote(noteModel)
         var checklist = adapter.getCheckboxList()
         checklist.forEach {
             it.noteId = noteId
         }
 
-        //passa os dados do nosso adapter/RecyclerView - a checklist criada - para serem salvos no banco
-        mCheckBoxRepository.saveCheckBox(checklist)
+        val listaNovosCheckBoxes = checklist.filter{
+            it.id == 0
+        }
+
+        if (id == 0.toLong()){
+            //passa os dados do nosso adapter/RecyclerView - a checklist criada - para serem salvos no banco
+            mCheckBoxRepository.saveCheckBox(checklist)
+        } else{
+            mCheckBoxRepository.saveCheckBox(listaNovosCheckBoxes)
+            mCheckBoxRepository.update(noteModel, mCheckBoxList.value)
+        }
+
     }
+
 
     //cria um novo CheckBox no RecyclerView
     fun createCheckbox(editText: TextView, adapter: CheckboxAdapter) {
